@@ -1,44 +1,25 @@
 # 🌍 satlens
 
-Semantic segmentation of map tiles using a fine-tuned SegFormer model trained on OpenEarthMap data.
+Pan and zoom a satellite map, hit Segment view, and get a pixel-level land cover overlay — roads, buildings, trees, water, and more.
 
-Given a latitude/longitude, **satlens** fetches the aerial tile and overlays a pixel-level land cover classification — roads, buildings, forests, water, farmland, and more.
-
-![demo placeholder](assets/demo.png)
-
----
-
-## What it does
-
-- Fetches a 512×512 aerial tile for any coordinates
-- Runs a fine-tuned [SegFormer-b0](https://huggingface.co/nvidia/mit-b0) model on the tile
-- Returns a colorized segmentation overlay showing land cover classes
-
-## Land cover classes
-
-| Color | Class |
-|-------|-------|
-| 🟥 | Bareland |
-| 🟫 | Rangeland |
-| 🟩 | Developed space |
-| 🟦 | Road |
-| ⬜ | Tree |
-| 🟨 | Water |
-| 🟪 | Agriculture |
-| ⬛ | Building |
-
-## Try it
-
-👉 **[Live demo on Hugging Face Spaces](https://huggingface.co/spaces/boehnen/satlens)**
+👉 [Live demo](https://huggingface.co/spaces/boehnen/satlens)
 
 Or run locally:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/satlens
+git clone https://github.com/boehnen/satlens
 cd satlens
 pip install -r requirements.txt
 python app/app.py
 ```
+
+## Results
+
+<img width="1156" height="1613" alt="download (1)" src="https://github.com/user-attachments/assets/1715a374-0572-473a-94a3-f26ff8a38000" />
+Left: aerial imagery. Center: ground truth labels. Right: model predictions.
+
+Best validation mIoU: 0.5958 after 20 epochs on a free Colab T4.
+<img width="1189" height="390" alt="download" src="https://github.com/user-attachments/assets/c3b63f6c-e59f-4db4-b5d5-be0af1231956" />
 
 ## Train it yourself
 
