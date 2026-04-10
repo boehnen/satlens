@@ -1,10 +1,32 @@
-# 🌍 satlens
+# SatLens
 
-Pan and zoom a satellite map, hit Segment view, and get a pixel-level land cover overlay — roads, buildings, trees, water, and more.
+**Computer vision · semantic segmentation · geospatial ML**
 
-👉 [Live demo](https://huggingface.co/spaces/boehnen/satlens)
+Fine-tuned SegFormer-b0 on satellite imagery for pixel-level land cover classification. Pan and zoom a satellite map, hit Segment view, and get a georeferenced color overlay in real time.
 
-Or run locally:
+👉 **[Live demo](https://huggingface.co/spaces/boehnen/satlens)** · [Model weights](https://huggingface.co/boehnen/satlens-segformer)
+
+---
+
+## Model
+
+- Architecture: SegFormer-b0 (3.7M params, Mix Transformer encoder + MLP decoder)
+- Dataset: OpenEarthMap, 2,687 aerial tiles, 8-class OSM-derived labels, 0.25–0.5m GSD, 44 countries
+- Training: 20 epochs, cosine LR, random flip augmentation, free Colab T4
+- Val mIoU: **0.596**
+
+## Inference
+
+At runtime the app computes which tile coordinates cover the current map viewport, fetches and stitches them into a canvas, runs the model, and returns a georeferenced PNG overlay positioned on the map via Leaflet's `imageOverlay`.
+
+The live demo uses ESRI satellite tiles, which differ in sensor and resolution from the training data. Performance on the demo reflects real domain shift rather than validation accuracy.
+
+## Stack
+
+- SegFormer-b0 via HuggingFace Transformers
+- PyTorch, OpenEarthMap, Gradio, Leaflet.js, ESRI World Imagery
+
+## Run locally
 
 ```bash
 git clone https://github.com/boehnen/satlens
@@ -13,42 +35,10 @@ pip install -r requirements.txt
 python app/app.py
 ```
 
-## Results
-
-<img width="1156" height="1613" alt="download (1)" src="https://github.com/user-attachments/assets/1715a374-0572-473a-94a3-f26ff8a38000" />
-Left: aerial imagery. Center: ground truth labels. Right: model predictions.
-
-Best validation mIoU: 0.5958 after 20 epochs on a free Colab T4.
-<img width="1189" height="390" alt="download" src="https://github.com/user-attachments/assets/c3b63f6c-e59f-4db4-b5d5-be0af1231956" />
-
-## Train it yourself
-
-Open `notebooks/train.ipynb` in Google Colab:
+## Train
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/boehnen/satlens/blob/main/notebooks/train.ipynb)
 
-Training takes ~45 minutes on a free Colab T4 GPU.
-
-## Stack
-
-- [SegFormer](https://huggingface.co/docs/transformers/model_doc/segformer) — transformer-based semantic segmentation
-- [OpenEarthMap](https://zenodo.org/records/7223446) — aerial imagery + OSM-derived labels
-- [Gradio](https://gradio.app/) — demo UI
-- [Hugging Face Spaces](https://huggingface.co/spaces) — free hosting
-
-## Project structure
-
-```
-satlens/
-├── notebooks/
-│   └── train.ipynb         # Full training pipeline (run in Colab)
-├── app/
-│   ├── app.py              # Gradio demo
-│   └── inference.py        # Tile fetching + model inference
-├── requirements.txt
-└── README.md
-```
-
 ---
 
-Built with [OpenEarthMap](https://open-earth-map.org/) dataset.
+Built with [OpenEarthMap](https://open-earth-map.org/).
