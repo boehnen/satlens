@@ -29,7 +29,7 @@ Given a latitude/longitude, **satlens** fetches the aerial tile and overlays a p
 
 ## Try it
 
-👉 **[Live demo on Hugging Face Spaces](https://huggingface.co/spaces/YOUR_USERNAME/satlens)**
+👉 **[Live demo on Hugging Face Spaces](https://huggingface.co/spaces/boehnen/satlens)**
 
 Or run locally:
 
@@ -44,14 +44,14 @@ python app/app.py
 
 Open `notebooks/train.ipynb` in Google Colab:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_USERNAME/satlens/blob/main/notebooks/train.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/boehnen/satlens/blob/main/notebooks/train.ipynb)
 
 Training takes ~45 minutes on a free Colab T4 GPU.
 
 ## Stack
 
 - [SegFormer](https://huggingface.co/docs/transformers/model_doc/segformer) — transformer-based semantic segmentation
-- [OpenEarthMap](https://open-earth-map.org/) — aerial imagery + OSM-derived labels
+- [OpenEarthMap](https://zenodo.org/records/7223446) — aerial imagery + OSM-derived labels
 - [Gradio](https://gradio.app/) — demo UI
 - [Hugging Face Spaces](https://huggingface.co/spaces) — free hosting
 
